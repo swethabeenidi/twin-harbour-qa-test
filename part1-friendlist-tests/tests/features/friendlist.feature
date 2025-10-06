@@ -1,3 +1,5 @@
+
+
 Feature: Friend List System
   Players can manage friendships and blocking actions between accounts.
 
@@ -20,14 +22,14 @@ Feature: Friend List System
   Scenario: Reject Friend Invite
     Given "Alice" has sent a friend invite to "Bob"
     When "Bob" rejects the invite
-    Then the invite should disappear from both users’ lists
+    Then the invite should disappear from both users' lists
     And no friendship relation should be created
     And a message "Invite declined/rejected" should be shown
 
   Scenario: Withdraw Friend Invite
     Given "Alice" has sent a friend invite to "Bob"
     When "Alice" withdraws the invite
-    Then the invite should disappear from both users’ lists
+    Then the invite should disappear from both users' lists
 
   Scenario: Send Invite When Already Friends
     Given "Alice" and "Bob" are already friends
@@ -39,20 +41,22 @@ Feature: Friend List System
     Given "Alice" and "Bob" are friends
     When "Alice" blocks "Bob"
     Then the relation status should change to "BLOCKED"
-    And "Bob" cannot send new invites or messages to "Alice"
+    And both "Alice" and "Bob" cannot send new invites or messages
     And the system should show "You cannot add this player"
 
-  Scenario: Send Invite When Blocked
-    Given "Bob" has blocked "Alice"
-    When "Alice" tries to send a friend invite to "Bob"
-    Then the system should show "You cannot add this player"
-    And no invite should be created
+  Scenario: Block Not a Friend
+    Given "Alice" and "Bob" have no existing relation
+    When "Alice" blocks "Bob"
+    Then the relation status should change to "BLOCKED"
+    And both "Alice" and "Bob" cannot send new invites or messages
+    And the system should show "You cannot add this player"
 
   Scenario: Block User After Sending Invite
     Given "Alice" has sent a pending friend invite to "Bob"
     When "Bob" blocks "Alice"
     Then the pending invite should disappear from both users
     And the relation becomes "BLOCKED"
+    And "Alice" cannot send new invites to "Bob" until unblocked
 
   Scenario: Unblock and Re-send Invite
     Given "Bob" previously blocked "Alice"

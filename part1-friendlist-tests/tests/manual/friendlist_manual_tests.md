@@ -65,7 +65,7 @@
 
 ---
 
-### Test Case 12 – Block (already Existing Friend)
+### Test Case 6 – Block (already Existing Friend)
 **Precondition:** Alice and Bob are FRIENDS.  
 **Steps:**  
 1. Alice goes to Bob’s profile from **Friends List** -> Clicks **“Block User.”**  
@@ -73,22 +73,22 @@
 
 **Expected Result:**  
 - Relation changes to **BLOCKED.**  
-- Bob cannot send new invites or messages and shows error message eg:“You cannot add this player.”
+- both cannot send new invites or messages and shows error message eg:“You cannot add this player.”
 
 ---
 
-### Test Case 6 – Send Invite When Blocked
-**Precondition:** Bob has BLOCKED Alice.  
+### Test Case 7 – Block (Not a Friend)
+**Precondition:** Alice and Bob have no relation.  
 **Steps:**  
-1. Alice goes to Bob’s profile -> Clicks **“Send Friend Invite.”**  
+1. Alice goes to Bob’s profile -> Clicks **“Block User.”**  
 
 **Expected Result:**  
-- Action Should not possible and System should show error message eg: “You cannot add this player.” 
-- No invite created and Relation remains **BLOCKED.**
+- Relation changes to **BLOCKED.**  
+- Both cannot send new invites or messages and shows error message eg: “You cannot add this player.” 
 
 ---
 
-### Test Case 7 – Block User After Sending Invite
+### Test Case 8 – Block User After Sending Invite
 **Precondition:** Alice sent a friend invite to Bob (pending).  
 **Steps:**  
 1. Bob opens **Pending Invites** -> Clicks **“Block User.”**  
@@ -100,7 +100,7 @@
 
 ---
 
-### Test Case 8 – Unblock and Re-send Invite
+### Test Case 9 – Unblock and Re-send Invite
 **Precondition:** Bob previously BLOCKED Alice.  
 **Steps:**  
 1. Bob opens **Blocked Users** -> Clicks **“Unblock.”**  
@@ -112,7 +112,7 @@
 
 ---
 
-### Test Case 9 – Concurrent (Cross) Invites
+### Test Case 10 – Concurrent (Cross) Invites
 **Precondition:** Alice and Bob have no relation.  
 **Steps:**  
 1. Alice sends a friend invite to Bob -> At the same time Bob sends a friend invite to Alice.  
