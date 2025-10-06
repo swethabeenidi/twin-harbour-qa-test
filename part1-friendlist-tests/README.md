@@ -4,8 +4,7 @@
 This folder contains manual and Gherkin-style test scenarios for the Friend List feature.
 
 **Functional Areas Covered**
-- Send / Accept / Reject / Withdraw Friend Requests
-- Blocking users
+- Send / Accept / Reject / Withdraw / Block users Friend Requests
 - Edge and Negative Scenarios (duplicate requests, blocked users, concurrent actions)
 
 **Purpose**
@@ -13,7 +12,7 @@ These manual tests are designed in such a way that can later automated in Playwr
 
 **Files**
 - `testcases/friendlist_manual_testcases.md` → full manual test list
-- `features/friendlist.feature` → Gherkin feature file
+- `features/friendlist.feature` → Gherkin feature file (Tests are written in Gherkin syntax, In real automation, each scenario would be mapped to step definitions in cypress/playwright)
 - `testcases/test_data.md` → data setup and reusable IDs
 
 **Final Notes**

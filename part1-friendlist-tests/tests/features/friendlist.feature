@@ -1,51 +1,85 @@
-Feature: Friend List Management
-  As a registered player
-  I want to manage friend invites and blocks
-  So that I can build and control my friend network
+Feature: Friend List System
+  Players can manage friendships and blocking actions between accounts.
+
+  Background:
+    Given player "Alice" exists
+    And player "Bob" exists
+    And no existing relation between "Alice" and "Bob"
 
   Scenario: Send Friend Invite
-    Given User A and User B are registered players
-    When User A sends a friend invite to User B
-    Then User B should see the invite in their pending invites list
-    And the invite status should be PENDING
+    When "Alice" sends a friend invite to "Bob"
+    Then "Bob" should see an invite with status "PENDING" in his pending invites list
+    And "Alice" should see "Bob" in her sent invites
 
   Scenario: Accept Friend Invite
-    Given User A has sent a friend invite to User B
-    When User B accepts the invite
-    Then both User A and User B should have relation status FRIEND
+    Given "Alice" has sent a friend invite to "Bob"
+    When "Bob" accepts the invite
+    Then both "Alice" and "Bob" should appear in each other's friend list
+    And the relation status should be "FRIEND"
 
   Scenario: Reject Friend Invite
-    Given User A has sent a friend invite to User B
-    When User B rejects the invite
-    Then no friendship relation should be created
-    And the invite is removed from pending invites
+    Given "Alice" has sent a friend invite to "Bob"
+    When "Bob" rejects the invite
+    Then the invite should disappear from both users’ lists
+    And no friendship relation should be created
+    And a message "Invite declined/rejected" should be shown
 
   Scenario: Withdraw Friend Invite
-    Given User A has sent a friend invite to User B
-    When User A withdraws the invite
-    Then the invite should disappear from both users lists
-    And no relation is created
+    Given "Alice" has sent a friend invite to "Bob"
+    When "Alice" withdraws the invite
+    Then the invite should disappear from both users’ lists
 
-  Scenario: Block User
-    Given User A wants to block User B
-    When User A blocks User B
-    Then the relation status should be BLOCKED
-    And User B cannot send invites or messages to User A
+  Scenario: Send Invite When Already Friends
+    Given "Alice" and "Bob" are already friends
+    When "Alice" tries to send another invite to "Bob"
+    Then the system should show "Already friends"
+    And no new invite should be created
 
-  Scenario: Unblock User
-    Given User A has blocked User B
-    When User A unblocks User B
-    Then User B can send friend invites to User A
-    And the BLOCKED status is removed
+  Scenario: Block Existing Friend
+    Given "Alice" and "Bob" are friends
+    When "Alice" blocks "Bob"
+    Then the relation status should change to "BLOCKED"
+    And "Bob" cannot send new invites or messages to "Alice"
+    And the system should show "You cannot add this player"
 
-  Scenario: Prevent Self Invite
-    Given User A is logged in
-    When User A attempts to send an invite to themselves
-    Then the system prevents the action
-    And displays an appropriate message
+  Scenario: Send Invite When Blocked
+    Given "Bob" has blocked "Alice"
+    When "Alice" tries to send a friend invite to "Bob"
+    Then the system should show "You cannot add this player"
+    And no invite should be created
 
-  Scenario: Prevent Duplicate Invite
-    Given User A has already sent an invite to User B
-    When User A tries to send another invite
-    Then the system prevents the duplicate invite
-    And displays a warning message
+  Scenario: Block User After Sending Invite
+    Given "Alice" has sent a pending friend invite to "Bob"
+    When "Bob" blocks "Alice"
+    Then the pending invite should disappear from both users
+    And the relation becomes "BLOCKED"
+
+  Scenario: Unblock and Re-send Invite
+    Given "Bob" previously blocked "Alice"
+    When "Bob" unblocks "Alice"
+    And "Alice" sends a new friend invite
+    Then the new invite should appear in "Bob's" pending list with status "PENDING"
+
+  Scenario: Concurrent (Cross) Invites
+    Given "Alice" and "Bob" have no existing relation
+    When both send a friend invite to each other at the same time
+    Then the system should create a single friendship relation
+    And no duplicate pending invites should remain
+
+  Scenario: Maximum Friend Limit
+    Given "Alice" has reached the maximum friend limit
+    When "Alice" tries to send a new invite
+    Then the system should show "Friend list full"
+    And no new invite should be sent
+
+  Scenario: Send Invite to Deleted or Inactive Account
+    Given "Bob's" account is deleted or inactive
+    When "Alice" tries to send an invite to "Bob"
+    Then the system should show "This account is not available"
+    And no invite should be created
+
+  Scenario: Send Invite to Self
+    Given "Alice" is logged into her own account
+    When "Alice" tries to send a friend invite to herself
+    Then the system should show "Cannot add yourself"
+    And no relation should be created
