@@ -11,8 +11,8 @@ This folder contains manual and Gherkin-style test scenarios for the Friend List
 These manual tests are designed in such a way that can later automated in Playwright/Cypress using a BDD framework like `Cucumber`.
 
 **Files**
-- `testcases/friendlist_manual_testcases.md` → full manual test list
-- `features/friendlist.feature` → Gherkin feature file (Tests are written in Gherkin syntax, In real automation, each scenario would be mapped to step definitions in cypress/playwright)
+- `tests/manual/friendlist_manual_testcases.md` → full manual test list
+- `tests/features/friendlist.feature` → Gherkin feature file (Tests are written in Gherkin syntax, In real automation, each scenario would be mapped to step definitions in cypress/playwright)
 
 **Final Notes**
 - The structure and test design are based on references and practices from my previous project work.  
