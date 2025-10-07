@@ -96,8 +96,9 @@
 2. Trigger a battle or similar event.  
 3. Check token visibility for all armies after the event.  
 **Expected Result:**  
-- The token remains unaffected by the event (should not be consumed).  
-- Visibility to neutral armies stays the same until manually removed or expired.  
+- The token is visible only to neutral army before the event.  
+- Token is removed immediately after the event triggers.  
+- No visibility for any armies after event.
 
 ---
 
@@ -109,7 +110,7 @@
 3. Check token visibility for all armies after the event.  
 **Expected Result:**  
 - The token should not be visible once the event is triggered.  
-- System should remove enemy-visible tokens after the event.  
+- System should remove tokens after the event.  
 - No token should remain active or visible to any army.
 
 ---
