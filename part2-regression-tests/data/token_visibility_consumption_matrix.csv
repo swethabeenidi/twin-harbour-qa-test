@@ -1,0 +1,12 @@
+Test Case ID,Visibility,Consumption,Expected Behavior,Current Status,Notes
+TC1,OWN,TIME,Token expires automatically after the timer and remains visible only to the owner until expiry,Pass,Time-based expiry verified
+TC2,ALLY,TIME,Token visible to owner and allies until timer expiry and removed from both after expiry,Pass,Expected behavior verified
+TC3,NEUTRAL,TIME,Token visible only to neutral armies during active period and disappears after timer expiry,Pass,Confirmed correct handling
+TC4,ENEMY,TIME,Token visible only to enemies during active period and expires correctly after timer,Pass,Verified correct behavior
+TC5,OWN,EVENT,Token consumed immediately after the event trigger; visible only to owner before event,Pass,Normal event-based consumption
+TC6,ALLY,EVENT,Token should be consumed immediately after event but remains visible to allies (known regression),Fail,Test Case 6 – Known Bug Case
+TC7,NEUTRAL,EVENT,Token unaffected by event; remains visible to neutral armies until manually removed or expired,Pass,Expected persistent behavior
+TC8,ENEMY,EVENT,Token consumed correctly after event; no longer visible to any army,Pass,Correct event-based cleanup
+TC9,MIXED,TIME+EVENT,Multiple tokens with different visibility and consumption created simultaneously; each follows its own rule with no cross-visibility errors,Pass,Sanity check passed – all combinations behaved as expected
+
+
